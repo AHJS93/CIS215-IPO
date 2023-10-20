@@ -33,10 +33,7 @@ namespace App
             {
                 var c = inp[i];
                 CharCnt++;
-                if (c != ' ' && c >= 33 && c <= 47 || 
-                    c!= ' ' && c >= 58 && c <= 64 || 
-                    c!= ' ' && c >= 91 && c <= 96 || 
-                    c!= ' ' && c >= 123 && c <= 126)
+                if (char.IsLetterOrDigit(c) == false && c != ' ')
                 {
                     SpecCnt++;
                 }
