@@ -43,7 +43,6 @@ namespace App
              * Creating a for loop to work on the words array
              * Creating a for loop to work on the sentences array
              **************************************/
-
             #region loops
             /*for loop to iterate through input string and increase CharCnt
              * Also check increase SpecCnt by checking against letters or digits*/
@@ -88,9 +87,11 @@ namespace App
             }
             #endregion loops
 
-            /*create object array to hold objects of multiple data types
+            /*****************************************************
+             * create object array to hold objects of multiple data types
              * fill object array countOut with output lines
-             * Iterate through countOut and convert objects to string for printing*/
+             * Iterate through countOut and convert objects to string for printing
+             ****************************************************/
             #region output
             /*declaring and initializing object array countOut*/
 
@@ -116,6 +117,7 @@ namespace App
                 Output.Line(stringOut[i]);
             }
             #endregion output
+
             // THIS SHOULD BE THE LAST STATEMENT FOR MAIN
             Console.Read();
         }
