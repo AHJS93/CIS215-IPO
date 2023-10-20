@@ -12,7 +12,7 @@ namespace App {
 		}
 
 		public static void Message ( string msg ) {
-			Console.Write ( msg );
+			Console.Write(msg);
 		}
 
 	}

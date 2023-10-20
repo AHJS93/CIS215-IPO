@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Net.Http;
 
 namespace App
 {
@@ -19,13 +20,12 @@ namespace App
             CharCnt = 0;
             NumCnt = 0;
             SpecCnt = 0;
-            int LetrCnt = 0;
             int SentCnt = 0;
             #endregion variables
 
             #region manipulations
             string[] words = inp.Split(' ');
-            char[] delimiters = { '.', '!', '?' };
+            char[] delimiters = {'.', '!', '?'};
             string[] sentences = inp.Split(delimiters);
             #endregion manipulations
 
@@ -34,23 +34,31 @@ namespace App
             {
                 var c = inp[i];
                 CharCnt++;
-                if (c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z')
+                if (c != ' ' && c >= 33 && c <= 47 || 
+                    c!= ' ' && c >= 58 && c <= 64 || 
+                    c!= ' ' && c >= 91 && c <= 96 || 
+                    c!= ' ' && c >= 123 && c <= 126)
                 {
-                    LetrCnt++;
-                }
-                else if (c >= '0' && c <= '9')
-                {
-                    NumCnt++;
+                    SpecCnt++;
                 }
                 else
                 {
-                    SpecCnt++;
+                    continue;
                 }
             }
 
             for (int i = 0; i < words.Length; i++)
             {
-                WordCnt++;
+                int result;
+                bool num = int.TryParse(words[i], out result);
+                if (result != 0)
+                {
+                    NumCnt++;
+                }
+                else
+                {
+                    WordCnt++;
+                }
             }
 
             for (int i = 1; i < sentences.Length; i++)
@@ -59,17 +67,21 @@ namespace App
             }
             #endregion loops
 
-            #region ouput
-            Console.WriteLine("Characters(ALL): " + CharCnt);
-            Console.WriteLine("Special(Non-Alphanumeric): " + SpecCnt);
-            Console.WriteLine("Letters(Alphabetic): " + LetrCnt);
-            Console.WriteLine("Numbers(Numeric): " + NumCnt);
-            Console.WriteLine("Words: " + WordCnt);
-            Console.WriteLine("Sentences: " + SentCnt);
-            Console.WriteLine("WPS: " + (float)WordCnt / SentCnt);
-            Console.WriteLine("CPS: " + (float)CharCnt / SentCnt);
-            Console.WriteLine("LPS: " + (float)LetrCnt / SentCnt);
-            Console.WriteLine("LPW: " + (float)LetrCnt / WordCnt);
+            #region output
+            object[] countOut = { 
+                "Word Count: " + WordCnt,
+                "Sentence Count: " + SentCnt, 
+                "Words per Sentence: " + (float)WordCnt/SentCnt,
+                "Character Count: " + CharCnt,
+                "Special Character Count: " + SpecCnt,
+                "Characters per Sentence: " + (float)CharCnt/SentCnt,
+                "Number Count: " + NumCnt
+            };
+            string[] stringOut = Array.ConvertAll(countOut, x => x.ToString());
+            for (int i = 0; i < countOut.Length; i++)
+            {
+                Output.Line(stringOut[i]);
+            }
             #endregion output
             // THIS SHOULD BE THE LAST STATEMENT FOR MAIN
             Console.Read();
